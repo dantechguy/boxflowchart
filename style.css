@@ -1,0 +1,80 @@
+body {
+    --background-grey: #ddd;
+    --box-size: 0;
+    --box-gap: 0;
+    --scrollbar-size: 10px;
+    margin: 0;
+    /*padding: 20px;*/
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+#table-container {
+    height: 100%;
+    overflow: hidden;
+    font-size: 0;
+}
+
+table#table {
+    position: relative;
+    border-collapse: collapse;
+    -webkit-user-drag: none;
+}
+
+td {
+    padding: 0;
+}
+
+td textarea.box {
+    width: var(--box-size);
+    height: var(--box-size);
+    resize: none;
+    margin-right: var(--box-gap);
+    margin-bottom: var(--box-gap);
+    padding: 10px;
+
+    /*white-space: pre;*/
+    /*overflow-wrap: normal;*/
+    /*overflow: scroll;*/
+
+    transition-property: width, height, margin;
+    transition-duration: 0.5s;
+
+    background-color: var(--background-grey);
+    border-radius: 5px;
+    border: 2px var(--background-grey) solid;
+    box-sizing: border-box;
+
+    font-size: 15px;
+}
+
+td textarea.box::-webkit-scrollbar {
+    width: var(--scrollbar-size);
+    padding: 0 2px;
+}
+
+td textarea.box::-webkit-scrollbar-track {
+    width: var(--scrollbar-size);
+    border-radius: calc(var(--scrollbar-size) / 2);
+    border: 2px var(--background-grey) solid;
+}
+
+td textarea.box::-webkit-scrollbar-thumb {
+    width: var(--scrollbar-size);
+    border-radius: calc(var(--scrollbar-size) / 2);
+    background-color: var(--background-grey);
+}
+
+td textarea.box:focus {
+    outline: none;
+    border: 2px #000 solid;
+    background-color: #fff;
+}
+
+td textarea.box.empty {
+    background-color: #fff;
+}
+
+.no-select {
+    user-select: none;
+}
