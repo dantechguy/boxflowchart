@@ -1,15 +1,16 @@
 // constants
 const c = {
-    BOX_START_SIZE: 200,
-    BOX_MIN_SIZE: 60,
-    BOX_MAX_SIZE: 1000,
+    BOX_SIZE: 200,
     BOX_GAP_RATIO: 0.5,
-    ZOOM_AMOUNT: 20,
+    DEFAULT_ZOOM: 1,
+    MIN_ZOOM: 0.5,
+    MAX_ZOOM: 5,
+    ZOOM_AMOUNT: 0.1,
 }
 
 // globals
 const g = {
-    boxSize: c.BOX_START_SIZE,
+    zoom: c.DEFAULT_ZOOM,
     x: 0,
     y: 0,
     data: {},

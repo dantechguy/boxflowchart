@@ -45,8 +45,8 @@ function mod(n, m) {
 
 
 function updateBoxSizeVariable() {
-    document.body.style.setProperty('--box-size', g.boxSize + 'px')
-    document.body.style.setProperty('--box-gap', c.BOX_GAP_RATIO*g.boxSize + 'px')
+    document.body.style.setProperty('--box-size', c.BOX_SIZE*g.zoom + 'px')
+    document.body.style.setProperty('--box-gap', c.BOX_GAP_RATIO*c.BOX_SIZE*g.zoom + 'px')
 }
 
 
@@ -131,5 +131,5 @@ function screenSize() {
 }
 
 function boxAndGapSize() {
-    return g.boxSize + (g.boxSize*c.BOX_GAP_RATIO)
+    return c.BOX_SIZE*g.zoom*(1+c.BOX_GAP_RATIO)
 }

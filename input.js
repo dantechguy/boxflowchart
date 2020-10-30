@@ -71,18 +71,35 @@ table.addEventListener('mouseup', e => {
 })
 
 
-// TODO: make zooming center around cursor
 document.addEventListener('mousewheel', e => {
     if (!drag.boxFocus) {
-        let zoomChange = e.wheelDelta > 0 ? c.ZOOM_AMOUNT : -c.ZOOM_AMOUNT
-        g.x += zoomChange
-        g.y += zoomChange
-        zoom(zoomChange)
+        let zoomChange = getZoomChange(e)
+        g.zoom *= 1+zoomChange
+        shiftToFitZoom(e, zoomChange)
+        render()
+        console.log(g.zoom)
     }
 })
 
-function zoom(amount) {
-    g.boxSize += amount
-    g.boxSize = Math.min(c.BOX_MAX_SIZE, Math.max(c.BOX_MIN_SIZE, g.boxSize))
-    render()
+function getZoomChange(e) {
+    let zoomChange = c.ZOOM_AMOUNT * Math.sign(e.wheelDelta)
+    let newZoom = Math.min(c.MAX_ZOOM, Math.max(c.MIN_ZOOM, g.zoom * (1+zoomChange)))
+    return newZoom / g.zoom - 1
+}
+
+function shiftToFitZoom(e, zoomChange) {
+    let {x, y} = getMouseCoords(e)
+    let mX = x * (1+zoomChange),
+        mY = y * (1+zoomChange)
+    let dX = mX - x,
+        dY = mY - y
+    g.x -= dX
+    g.y -= dY
+}
+
+function getMouseCoords(e) {
+    return {
+        x: e.pageX - g.x,
+        y: e.pageY - g.y,
+    }
 }
