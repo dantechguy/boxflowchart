@@ -16,7 +16,7 @@ body {
 }
 
 #table {
-    position: relative;
+    /*position: relative;*/
     border-collapse: collapse;
     -webkit-user-drag: none;
 }
@@ -24,6 +24,9 @@ body {
 td {
     padding: 0;
 }
+
+
+/* box */
 
 .box {
     width: var(--box-size);
@@ -37,16 +40,35 @@ td {
     overflow-wrap: normal;
     overflow: scroll;
 
-    /*transition-property: width, height, margin;*/
-    /*transition-duration: 0.5s;*/
-
     background-color: var(--background-grey);
     border-radius: 5px;
     border: 2px var(--background-grey) solid;
     box-sizing: border-box;
 
     font-size: 15px;
+
+    opacity: 1;
 }
+
+.box:focus {
+    outline: none;
+    border: 2px #000 solid !important;
+    background-color: #fff;
+    opacity: 1 !important;
+}
+
+.box.empty {
+    background-color: #fff;
+    border: 2px var(--background-grey) dashed;
+    opacity: 0;
+}
+
+.box.empty:hover {
+    opacity: 1
+}
+
+
+/* box scrollbar */
 
 .box::-webkit-scrollbar {
     width: var(--scrollbar-size);
@@ -62,14 +84,4 @@ td {
     width: var(--scrollbar-size);
     border-radius: calc(var(--scrollbar-size) / 2);
     background-color: var(--background-grey);
-}
-
-.box:focus {
-    outline: none;
-    border: 2px #000 solid;
-    background-color: #fff;
-}
-
-.box.empty {
-    background-color: #fff;
 }

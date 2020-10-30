@@ -3,39 +3,41 @@ let table = document.getElementById('table')
 let tableContainer = document.getElementById('table-container')
 
 
-function render() {
-    createBoxes()
-    updateBoxSizeVariable()
-    updateTableOffset()
-    updateBoxContent()
+function render(forceContentUpdate = false) {
+    requestAnimationFrame(() => {
+        createBoxes()
+        updateBoxSizeVariable()
+        updateTableOffset()
+        tryUpdateBoxContent(forceContentUpdate)
+    })
 }
 
-function updateBoxContent() {
-    let x, y, textArea
+function tryUpdateBoxContent(forceContentUpdate = false) {
+    let tableBoxX = Math.floor(g.x / boxAndGapSize()),
+        tableBoxY = Math.floor(g.y / boxAndGapSize())
+    if (forceContentUpdate
+        || table.prevBoxX !== tableBoxX
+        || table.prevBoxY !== tableBoxY)
+        updateAllBoxContent()
+    table.prevBoxX = tableBoxX
+    table.prevBoxY = tableBoxY
+}
+
+function updateAllBoxContent() {
     boxes.forEach((boxRow, row) => {
         boxRow.forEach((box, col) => {
-            x = col - Math.floor(g.x / boxAndGapSize())
-            y = row - Math.floor(g.y / boxAndGapSize())
-            box.x = x
-            box.y = y
-            textArea = box.firstChild
-            if (dataHasCoords([x, y])) {
-                textArea.value = g.data[[x, y]]
-                textArea.classList.remove('empty')
-            } else {
-                textArea.value = ''
-                textArea.classList.add('empty')
-            }
+            box.updateContent({col: col, row: row})
         })
     })
 }
 
 
-
-
 function updateTableOffset() {
-    table.style.left = mod(g.x, boxAndGapSize()) - boxAndGapSize() + 'px'
-    table.style.top = mod(g.y, boxAndGapSize()) - boxAndGapSize() + 'px'
+    let x = mod(g.x, boxAndGapSize()) - boxAndGapSize() + 'px',
+        y = mod(g.y, boxAndGapSize()) - boxAndGapSize() + 'px'
+    table.style.transform = `translate(${x}, ${y})`
+    // table.style.left =
+    // table.style.top = mod(g.y, boxAndGapSize()) - boxAndGapSize() + 'px'
 }
 
 function mod(n, m) {
@@ -56,8 +58,8 @@ function createBoxes() {
     let currentRows = boxes.length
     let currentCols = boxes.length ? boxes[0].length : 0
 
-    let neededRows = Math.ceil(screenSize().height / boxAndGapSize()) + 1
-    let neededCols = Math.ceil(screenSize().width / boxAndGapSize()) + 1
+    let neededRows = Math.ceil(g.screen.height / boxAndGapSize()) + 1
+    let neededCols = Math.ceil(g.screen.width / boxAndGapSize()) + 1
 
     let changeInRows = neededRows - currentRows
     let changeInCols = neededCols - currentCols
@@ -120,14 +122,25 @@ function createTableCell() {
     textArea.onfocus = boxFocus
     textArea.onblur = boxBlur
     tableCell.appendChild(textArea)
+    tableCell.updateContent = updateBoxContent
     return tableCell
 }
 
-function screenSize() {
-    return {
-        width: tableContainer.offsetWidth,
-        height: tableContainer.offsetHeight,
-    }
+function updateBoxContent({col, row}) {
+    let x, y, textArea, text
+    x = col - Math.floor(g.x / boxAndGapSize())
+    y = row - Math.floor(g.y / boxAndGapSize())
+    this.x = x
+    this.y = y
+    textArea = this.firstChild
+    text = g.data[[x, y]] || ''
+    textArea.value = text
+    if (text === this.prevText) {}
+    else if (textArea.value === '')
+        textArea.classList.add('empty')
+    else
+        textArea.classList.remove('empty')
+    this.prevText = text
 }
 
 function boxAndGapSize() {

@@ -36,7 +36,7 @@ function boxFocus(e) {
 
 function boxBlur(e) {
     drag.boxFocus = false
-    render()
+    render(true)
 }
 
 tableContainer.addEventListener('mousedown', e => {
@@ -76,9 +76,13 @@ document.addEventListener('mousewheel', e => {
         let zoomChange = getZoomChange(e)
         g.zoom *= 1+zoomChange
         shiftToFitZoom(e, zoomChange)
-        render()
-        console.log(g.zoom)
+        render(true)
     }
+})
+
+window.addEventListener('resize', e => {
+    updateScreenSize()
+    render(true)
 })
 
 function getZoomChange(e) {

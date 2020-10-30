@@ -14,12 +14,23 @@ const g = {
     x: 0,
     y: 0,
     data: {},
+    arrows: {}, // TODO: implement arrows
+    screen: {
+        width: 0,
+        height: 0,
+    }
 }
 
-g.data[[0,0]] = 'hey!!'
+g.data[[1,1]] = 'Welcome!'
+
+function updateScreenSize() {
+    g.screen.width = tableContainer.offsetWidth
+    g.screen.height = tableContainer.offsetHeight
+}
 
 function dataHasCoords(coords) {
     return g.data.hasOwnProperty(coords)
 }
 
+updateScreenSize()
 render()
