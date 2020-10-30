@@ -28,8 +28,8 @@ function updateScreenSize() {
     g.screen.height = tableContainer.offsetHeight
 }
 
-function dataHasCoords(coords) {
-    return g.data.hasOwnProperty(coords)
+window.onbeforeunload = () => {
+    return 'Your work will not be saved if you leave'
 }
 
 updateScreenSize()

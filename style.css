@@ -16,9 +16,9 @@ body {
 }
 
 #table {
-    /*position: relative;*/
     border-collapse: collapse;
     -webkit-user-drag: none;
+    cursor: grab;
 }
 
 td {
@@ -48,6 +48,7 @@ td {
     font-size: 15px;
 
     opacity: 1;
+    cursor: pointer;
 }
 
 .box:focus {
@@ -55,6 +56,7 @@ td {
     border: 2px #000 solid !important;
     background-color: #fff;
     opacity: 1 !important;
+    cursor: auto;
 }
 
 .box.empty {
