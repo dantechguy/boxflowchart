@@ -1,9 +1,10 @@
 // constants
 const c = {
     BOX_START_SIZE: 200,
-    BOX_MIN_SIZE: 100,
+    BOX_MIN_SIZE: 60,
     BOX_MAX_SIZE: 1000,
     BOX_GAP_RATIO: 0.5,
+    ZOOM_AMOUNT: 20,
 }
 
 // globals

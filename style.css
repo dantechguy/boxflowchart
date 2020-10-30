@@ -15,7 +15,7 @@ body {
     font-size: 0;
 }
 
-table#table {
+#table {
     position: relative;
     border-collapse: collapse;
     -webkit-user-drag: none;
@@ -25,7 +25,7 @@ td {
     padding: 0;
 }
 
-td textarea.box {
+.box {
     width: var(--box-size);
     height: var(--box-size);
     resize: none;
@@ -33,12 +33,12 @@ td textarea.box {
     margin-bottom: var(--box-gap);
     padding: 10px;
 
-    /*white-space: pre;*/
-    /*overflow-wrap: normal;*/
-    /*overflow: scroll;*/
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow: scroll;
 
-    transition-property: width, height, margin;
-    transition-duration: 0.5s;
+    /*transition-property: width, height, margin;*/
+    /*transition-duration: 0.5s;*/
 
     background-color: var(--background-grey);
     border-radius: 5px;
@@ -48,33 +48,28 @@ td textarea.box {
     font-size: 15px;
 }
 
-td textarea.box::-webkit-scrollbar {
+.box::-webkit-scrollbar {
     width: var(--scrollbar-size);
-    padding: 0 2px;
+    height: var(--scrollbar-size);
 }
 
-td textarea.box::-webkit-scrollbar-track {
-    width: var(--scrollbar-size);
-    border-radius: calc(var(--scrollbar-size) / 2);
-    border: 2px var(--background-grey) solid;
+.box::-webkit-scrollbar-corner {
+    display: none;
 }
 
-td textarea.box::-webkit-scrollbar-thumb {
+.box::-webkit-scrollbar-thumb {
+    cursor: auto;
     width: var(--scrollbar-size);
     border-radius: calc(var(--scrollbar-size) / 2);
     background-color: var(--background-grey);
 }
 
-td textarea.box:focus {
+.box:focus {
     outline: none;
     border: 2px #000 solid;
     background-color: #fff;
 }
 
-td textarea.box.empty {
+.box.empty {
     background-color: #fff;
-}
-
-.no-select {
-    user-select: none;
 }

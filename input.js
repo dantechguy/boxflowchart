@@ -36,24 +36,21 @@ function boxFocus(e) {
 
 function boxBlur(e) {
     drag.boxFocus = false
-    // e.target.selectionStart = e.target.selectionEnd
     render()
 }
 
 tableContainer.addEventListener('mousedown', e => {
-    updateMouseMoving(e)
-    if (drag.mouse.moving)
-        e.preventDefault()
     drag.mouse.down = true
     drag.mouse.start.x = e.pageX
     drag.mouse.start.y = e.pageY
     drag.start.x = g.x
     drag.start.y = g.y
+    updateMouseMoving(e)
 })
 
 tableContainer.addEventListener('mousemove', e => {
-    // e.preventDefault()
     if (drag.mouse.down && !drag.boxFocus) {
+        e.preventDefault()
         g.x = drag.start.x + (e.pageX-drag.mouse.start.x)
         g.y = drag.start.y + (e.pageY-drag.mouse.start.y)
         render()
@@ -72,3 +69,20 @@ table.addEventListener('mouseup', e => {
     e.preventDefault()
     drag.mouse.down = false
 })
+
+
+// TODO: make zooming center around cursor
+document.addEventListener('mousewheel', e => {
+    if (!drag.boxFocus) {
+        let zoomChange = e.wheelDelta > 0 ? c.ZOOM_AMOUNT : -c.ZOOM_AMOUNT
+        g.x += zoomChange
+        g.y += zoomChange
+        zoom(zoomChange)
+    }
+})
+
+function zoom(amount) {
+    g.boxSize += amount
+    g.boxSize = Math.min(c.BOX_MAX_SIZE, Math.max(c.BOX_MIN_SIZE, g.boxSize))
+    render()
+}
